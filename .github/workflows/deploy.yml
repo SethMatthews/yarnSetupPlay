@@ -85,6 +85,13 @@ jobs:
         uses: actions/upload-pages-artifact@v2
         with:
           path: ./out
+      - name: Deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        needs: build
+        run: npx sst deploy --stage prod
+
 
   # Deployment job
   deploy:
@@ -99,6 +106,23 @@ jobs:
 
         run: |
           npx sst deploy --stage prod
+
+
+
+
+  # # Deployment job
+  # deploy:
+
+  #   name: Deploy
+  #       env:
+  #         # DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  #         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  #       needs: build
+
+  #       run: |
+  #         npx sst deploy --stage prod
 
 
 
